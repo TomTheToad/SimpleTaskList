@@ -86,9 +86,9 @@ class CoreDataController: NSObject {
     
     func getAllTasks() -> NSFetchedResultsController<Task> {
         let request = NSFetchRequest<Task>(entityName: "Task")
-        let sort = NSSortDescriptor(key: #keyPath(Task.belongsToGroup.name), ascending: true)
+        let sort = NSSortDescriptor(key: #keyPath(Task.name), ascending: true)
         request.sortDescriptors = [sort]
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: #keyPath(TaskGroup.name), cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: #keyPath(Task.belongsToGroup.name), cacheName: nil)
         do {
             try fetchedResultsController.performFetch()
         } catch {
@@ -100,6 +100,15 @@ class CoreDataController: NSObject {
     // Update
     
     // Delete
+    func deleteAllTasks() {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        do {
+            try context.execute(batchDeleteRequest)
+        } catch {
+            print("Unable to delete all tasks")
+        }
+    }
     
     // helpers
     func getDefaultGroupId() {

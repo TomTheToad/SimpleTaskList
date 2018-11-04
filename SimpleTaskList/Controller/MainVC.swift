@@ -12,19 +12,11 @@ import CoreData
 class MainVC: UIViewController {
     // Fields
     let coreData = CoreDataController()
-//    var fetchedRC: NSFetchedResultsController<Task>! {
-//        didSet {
-//            print("fetchedRC was set")
-//        }
-//    }
-    var fetchedRCGroups: NSFetchedResultsController<TaskGroup>! {
+    var fetchedRC: NSFetchedResultsController<Task>! {
         didSet {
-            print("fetchedRCGroups was set")
+            print("fetchedRC was set")
         }
     }
-    
-    // Current task group for table section
-    var currentTaskGroup: TaskGroup?
     
     // IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -32,67 +24,52 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        fetchedRC = coreData.getAllTasks()
-        fetchedRCGroups = coreData.getAllTaskGroups()
+        
+        // Test functions
+        deleteData()
         addTestItems()
+        
+        // Initialize fields
+        fetchedRC = coreData.getAllTasks()
 
+        // Configure
         tableView.delegate = self
         tableView.dataSource = self
-//        fetchedRC.delegate = self
-        fetchedRCGroups.delegate = self
-        
+        fetchedRC.delegate = self
         newTaskButton.layer.cornerRadius = 5
-//        updateFetchedResultsGroups()
     }
     
     // IBActions
     @IBAction func newTaskButton(_ sender: Any) {
-//        let group = fetchedRC.fetchedObjects?.first!
-//        coreData.newTask(name: "a new task", info: "test task", groupId: group?.id!)
+        // TODO: Create a new task
     }
     
     // Helper Functions
-//    func updateFetchedResults() {
-//        do {
-//            try fetchedRC.performFetch()
-//        } catch {
-//            print("problem with task fetch")
-//        }
-//        tableView.reloadData()
-//    }
-    
-    func updateFetchedResultsGroups() {
+    // TODO: Delete if not used
+    func updateFetchedResults() {
         do {
-            try fetchedRCGroups.performFetch()
+            try fetchedRC.performFetch()
         } catch {
-            print("problem with group fetch")
+            print("problem with task fetch")
         }
+        tableView.reloadData()
     }
 
 }
 
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        let count = fetchedRCGroups.fetchedObjects?.count ?? 0
-//        print("number of sections: \(count)")
+        let count = fetchedRC.sections?.count ?? 0
         return count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = fetchedRCGroups.fetchedObjects?[section] else {
+        guard let section = fetchedRC.sections?[section] else {
             return 0
         }
         
-        print("using section: \(String(describing: section.name))")
-        
-        // MARK: test set current task group
-        currentTaskGroup = section
-        
-        guard let numberTasks = section.hasTasks?.count else {
-            return 0
-        }
-//        print("number of task in section: \(numberTasks)")
-        return numberTasks
+        let count = section.numberOfObjects
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -100,15 +77,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-//        guard let taskGroup = currentTaskGroup else {
-//            return cell
-//        }
-        
-        guard let taskGroup = fetchedRCGroups.sections[]
-        
-        guard let task = taskGroup.hasTasks?.allObjects[indexPath.row] as? Task else {
-            return cell
-        }
+        let task = fetchedRC.object(at: indexPath)
         
         cell.textLabel?.text = task.name
         return cell
@@ -132,11 +101,11 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         label.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
         
-        guard let taskGroup = currentTaskGroup else {
+        guard let taskGroup = fetchedRC.sections?[section] else {
             label.text = "Title Missing"
             return view
         }
-        label.text = taskGroup.name!
+        label.text = taskGroup.name
         return view
     }
     
@@ -171,10 +140,15 @@ extension MainVC: NSFetchedResultsControllerDelegate {
 
 extension MainVC {
     // Test Functions
+    func deleteData() {
+        coreData.deleteAllTasks()
+    }
+    
     func addTestItems() {
         // Test groups which hold tasks (aka group of tasks)
         let testGroup1 = coreData.newTaskGroup(name: "testGroup1", info: nil)
         let testGroup2 = coreData.newTaskGroup(name: "testGroup2", info: nil)
+        let testGroup3 = coreData.newTaskGroup(name: "testGroup3", info: nil)
         
         // Tasks group 1
         let task1 = coreData.newTask(name: "task1", info: "do something", groupId: testGroup1.id)
@@ -183,6 +157,10 @@ extension MainVC {
         // Tasks group 2
         let task3 = coreData.newTask(name: "task3", info: "do a bigger thing", groupId: testGroup2.id)
         let task4 = coreData.newTask(name: "task4", info: "do a small thing", groupId: testGroup2.id)
+        let task5 = coreData.newTask(name: "task5", info: "do a smaller thing", groupId: testGroup2.id)
+        
+        // Task group 3
+        let task6 = coreData.newTask(name: "task6", info: "do nothing", groupId: testGroup3.id)
         
         // Add tasks to group 1
         testGroup1.addToHasTasks(task1)
@@ -191,7 +169,22 @@ extension MainVC {
         // Add tasks to group 2
         testGroup2.addToHasTasks(task3)
         testGroup2.addToHasTasks(task4)
+        testGroup2.addToHasTasks(task5)
+        
+        // Add tasks to group 3
+        testGroup3.addToHasTasks(task6)
         
         coreData.saveContext()
+    }
+    
+    func showAllTask() {
+        guard let tasks = fetchedRC.fetchedObjects else {
+            print("Show all tasks failed")
+            return
+        }
+        
+        for task in tasks {
+            print("task name \(String(describing: task.name))")
+        }
     }
 }
