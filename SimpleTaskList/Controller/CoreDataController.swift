@@ -58,12 +58,6 @@ class CoreDataController: NSObject {
         newTaskGroup.id = UUID()
         newTaskGroup.name = name
         
-        guard let info = info else {
-            saveContext()
-            return newTaskGroup
-        }
-        
-        newTaskGroup.info = info
         return newTaskGroup
     }
     
