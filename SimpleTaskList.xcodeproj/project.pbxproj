@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C7499AF42184C57E00872D3A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7499AF32184C57E00872D3A /* MainVC.swift */; };
+		C77B4FAB21919AA000F2139A /* TaskTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77B4FAA21919AA000F2139A /* TaskTableCell.swift */; };
 		C77CD3432188AE84007E5CE0 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77CD3422188AE84007E5CE0 /* CoreDataController.swift */; };
 		C78BB7E02184C27800863C65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78BB7DF2184C27800863C65 /* AppDelegate.swift */; };
 		C78BB7E52184C27800863C65 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C78BB7E32184C27800863C65 /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		C7499AF32184C57E00872D3A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		C77B4FAA21919AA000F2139A /* TaskTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableCell.swift; sourceTree = "<group>"; };
 		C77CD3422188AE84007E5CE0 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		C78BB7DC2184C27800863C65 /* SimpleTaskList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleTaskList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78BB7DF2184C27800863C65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				C78BB7DF2184C27800863C65 /* AppDelegate.swift */,
 				C7499AF32184C57E00872D3A /* MainVC.swift */,
 				C77CD3422188AE84007E5CE0 /* CoreDataController.swift */,
+				C77B4FAA21919AA000F2139A /* TaskTableCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C77B4FAB21919AA000F2139A /* TaskTableCell.swift in Sources */,
 				C78BB7E82184C27800863C65 /* SimpleTaskList.xcdatamodeld in Sources */,
 				C7499AF42184C57E00872D3A /* MainVC.swift in Sources */,
 				C77CD3432188AE84007E5CE0 /* CoreDataController.swift in Sources */,

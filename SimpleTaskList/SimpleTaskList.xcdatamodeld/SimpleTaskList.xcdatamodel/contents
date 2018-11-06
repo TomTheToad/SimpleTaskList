@@ -10,12 +10,11 @@
     </entity>
     <entity name="TaskGroup" representedClassName="TaskGroup" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" defaultValueString="new group" syncable="YES"/>
         <relationship name="hasTasks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Task" inverseName="belongsToGroup" inverseEntity="Task" syncable="YES"/>
     </entity>
     <elements>
         <element name="Task" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="TaskGroup" positionX="-54" positionY="-9" width="128" height="105"/>
+        <element name="TaskGroup" positionX="-54" positionY="-9" width="128" height="90"/>
     </elements>
 </model>

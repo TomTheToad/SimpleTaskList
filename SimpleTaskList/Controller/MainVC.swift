@@ -20,7 +20,6 @@ class MainVC: UIViewController {
     
     // IBOutlets
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var newTaskButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +35,6 @@ class MainVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         fetchedRC.delegate = self
-        newTaskButton.layer.cornerRadius = 5
-    }
-    
-    // IBActions
-    @IBAction func newTaskButton(_ sender: Any) {
-        // TODO: Create a new task
     }
     
     // Helper Functions
@@ -110,11 +103,11 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else {
+        guard let cell = tableView.cellForRow(at: indexPath) as? TaskTableCell else {
             return
         }
         
-        cell.textLabel?.textColor = (cell.textLabel?.textColor == .lightGray) ? .black : .lightGray
+//        cell.textLabel?.textColor = (cell.textLabel?.textColor == .lightGray) ? .black : .lightGray
     }
 }
 
